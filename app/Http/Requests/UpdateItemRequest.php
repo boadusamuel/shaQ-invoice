@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreCustomerRequest extends FormRequest
+class UpdateItemRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,10 @@ class StoreCustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:100'],
-            'phone' => ['required', Rule::unique('customers')],
+            'name' => ['nullable', 'string', Rule::unique('items')->ignore($this->route('item'))],
+            'price' => ['nullable', 'numeric'],
+            'quantity' => ['nullable', 'numeric'],
+            'description' => ['nullable', 'string'],
         ];
     }
 }
