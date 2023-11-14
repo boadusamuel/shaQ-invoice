@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "ShaQ/invoicing",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Invoice Management System.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
