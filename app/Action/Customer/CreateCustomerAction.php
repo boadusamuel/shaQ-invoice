@@ -3,19 +3,18 @@
 namespace App\Action\Customer;
 
 use App\Http\Requests\StoreCustomerRequest;
+use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use Exception;
 
-class StoreCustomerAction
+class CreateCustomerAction
 {
-    function handle(StoreCustomerRequest $request): ?Customer
+    function handle(StoreCustomerRequest $request): ?CustomerResource
     {
         try {
             $data = $request->validated();
-            return Customer::create([
-                'name' => $data['name'],
-                'phone' => $data['phone'],
-            ]);
+            $customer = Customer::create($data);
+            return new CustomerResource($customer);
         }catch (Exception $e) {
            report($e);
         }
