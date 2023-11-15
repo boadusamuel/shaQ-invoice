@@ -12,8 +12,8 @@ class ShowCustomerAction
     {
         try {
             return new CustomerResource($customer);
-        }catch (Exception $e) {
-            report($e);
+        }catch (Exception $exception) {
+            report($exception);
         }
         return null;
     }

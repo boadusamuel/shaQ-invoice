@@ -15,8 +15,8 @@ class CreateItemAction
             $data = $request->validated();
             $item = Item::create($data);
             return new ItemResource($item);
-        }catch (Exception $e) {
-            report($e);
+        }catch (Exception $exception) {
+            report($exception);
         }
         return null;
     }

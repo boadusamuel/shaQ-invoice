@@ -15,8 +15,8 @@ class CreateCustomerAction
             $data = $request->validated();
             $customer = Customer::create($data);
             return new CustomerResource($customer);
-        }catch (Exception $e) {
-           report($e);
+        }catch (Exception $exception) {
+           report($exception);
         }
         return null;
     }

@@ -17,16 +17,15 @@ class GetAllItemsAction
             $page = $request->input('page', 1);
             $name = $request->input('name');
 
-            return ItemResource::collection(
-                Item::query()
-                    ->when($name, function ($query, $name) {
-                        $query->where('name', 'like', "%{$name}%");
-                    })
-                    ->paginate($perPage, ['*'], 'page', $page)
-            );
+            $items = Item::query()
+                ->when($name, function ($query, $name) {
+                    $query->where('name', 'like', "%{$name}%");
+                })
+                ->paginate($perPage, ['*'], 'page', $page);
 
-        } catch (Exception $e) {
-            report($e);
+            return ItemResource::collection($items);
+        } catch (Exception $exception) {
+            report($exception);
         }
         return null;
     }

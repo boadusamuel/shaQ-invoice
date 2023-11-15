@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Invoice;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\ResponseFactory;
@@ -43,4 +44,21 @@ function paginatedSuccessResponse($data = [], int $statusCode = 200, $message = 
         'meta' => optional($responseData)->meta,
         ...$extra,
     ], $statusCode);
+}
+
+function formatNumber($number, $decimal = 2): string
+{
+ return number_format($number, $decimal);
+}
+
+function reduceInvoiceItemStocks(Invoice $invoice): void
+{
+    $invoiceItems = $invoice->items;
+
+    foreach ($invoiceItems as $item) {
+
+        $itemQuantity = $item->pivot->quantity;
+
+        $item->decrement('quantity', $itemQuantity);
+    }
 }

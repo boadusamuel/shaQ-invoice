@@ -15,8 +15,8 @@ class UpdateItemAction
             $data = $request->validated();
             $item->update($data);
             return new ItemResource($item);
-        }catch (Exception $e) {
-            report($e);
+        }catch (Exception $exception) {
+            report($exception);
         }
         return null;
     }

@@ -16,8 +16,8 @@ class AddItemQuantityAction
              $item->increment('quantity', $data['quantity']);
              $item->save();
              return new ItemResource($item);
-        }catch (Exception $e) {
-            report($e);
+        }catch (Exception $exception) {
+            report($exception);
         }
         return null;
     }
