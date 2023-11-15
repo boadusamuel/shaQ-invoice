@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
+            $table->string('number');
             $table->foreignId('customer_id')->constrained();
-            $table->dateTime('issue_date')->default(now());
+            $table->date('issue_date')->default(now());
             $table->date('due_date');
+            $table->decimal('total')->nullable();
             $table->timestamps();
         });
     }

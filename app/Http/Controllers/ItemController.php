@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Action\Item\AddItemQuantityAction;
 use App\Action\Item\CreateItemAction;
 use App\Action\Item\GetAllItemsAction;
+use App\Action\Item\ShowItemAction;
 use App\Action\Item\UpdateItemAction;
 use App\Http\Requests\AddItemQuantityRequest;
 use App\Http\Requests\StoreItemRequest;
@@ -60,6 +61,16 @@ class ItemController extends Controller
     public function update(UpdateItemRequest $request, Item $item, UpdateItemAction $action)
     {
         $item = $action->handle($item, $request);
+
+        if ($item){
+            return successResponse($item);
+        }
+        return errorResponse();
+    }
+
+    public function show(Item $item, ShowItemAction $action)
+    {
+        $item = $action->handle($item);
 
         if ($item){
             return successResponse($item);

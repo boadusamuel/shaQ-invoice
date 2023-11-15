@@ -15,11 +15,29 @@ class InvoiceSeeder extends Seeder
      */
     public function run(): void
     {
-       $invoices = Invoice::factory(10)->create();
+        $invoices = Invoice::factory(10)->create();
 
-       foreach ($invoices as $invoice) {
-           $invoice->items()->saveMany(InvoiceItem::factory(5)->make());
-       }
+        foreach ($invoices as $invoice) {
 
+            $quantity = fake()->numberBetween(1, 5);
+            $amount = fake()->numberBetween(1, 5);
+            $description = fake()->text();
+            $itemId = fake()->numberBetween(1, 5);
+            $unitPrice = fake()->numberBetween(1, 5);
+
+
+            $invoice->items()->attach(
+                $itemId,
+            [
+                'unit_price' => $unitPrice,
+                'quantity' => $quantity,
+                'amount' => $amount,
+                'description' => $description,
+            ]);
+
+            $invoice->total = $invoice->items()->sum('amount');
+
+            $invoice->save();
+        }
     }
 }

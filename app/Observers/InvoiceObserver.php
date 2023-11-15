@@ -2,15 +2,16 @@
 
 namespace App\Observers;
 
+use App\Events\InvoiceCreatedEvent;
 use App\Models\Invoice;
 
 class InvoiceObserver
 {
     /**
-     * Handle the Invoice "created" event.
+     * Handle the Invoice "creating" event.
      */
     public function creating(Invoice $invoice): void
     {
-        $invoice->code = $invoice->generateCode();
+        $invoice->number = $invoice->generateCode();
     }
 }

@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\InvoiceItemsUpdateSufficientStockRule;
+use App\Rules\SufficientStockRule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateInvoiceRequest extends FormRequest
+class UpdateInvoiceItemsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +25,11 @@ class UpdateInvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'customerId' => ['required', 'exists:customers,id'],
-            'issueDate' => ['date', 'nullable'],
-            'dueDate' => ['date', 'required', 'after_or_equal:issueDate'],
+            'items.*.itemId' => ['required','integer', 'exists:items,id'],
+            'items.*.quantity' => ['required','integer', 'min:1'],
+            'items.*.description' => ['required','string'],
+            'items.*.price' => ['required','numeric'],
+            'items' => ['required','array', 'min:1', new InvoiceItemsUpdateSufficientStockRule()],
         ];
     }
 }

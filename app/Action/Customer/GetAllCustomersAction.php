@@ -17,15 +17,15 @@ class GetAllCustomersAction
             $page = $request->input('page', 1);
             $name = $request->input('name');
 
-            return CustomerResource::collection(
-                Customer::query()
-                    ->when($name, function ($query, $name) {
-                        $query->where('name', 'like', "%{$name}%");
-                    })
-                    ->paginate($perPage, ['*'], 'page', $page)
-            );
-        } catch (Exception $e) {
-            report($e);
+            $customers = Customer::query()
+                ->when($name, function ($query, $name) {
+                    $query->where('name', 'like', "%{$name}%");
+                })
+                ->paginate($perPage, ['*'], 'page', $page);
+
+            return CustomerResource::collection($customers);
+        } catch (Exception $exception) {
+            report($exception);
         }
         return null;
     }
