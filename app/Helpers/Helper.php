@@ -25,24 +25,11 @@ function paginatedSuccessResponse($data = [], int $statusCode = 200, $message = 
 {
     $responseData = $data->response()->getData();
 
-    $extra = [
-        'additional' => null,
-    ];
-
-    if ($message) {
-        $extra['message'] = $message;
-    }
-
-    if ($data->additional) {
-        $extra['additional'] = $data->additional['additional'];
-    }
-
     return response([
         'success' => true,
         'data' => $data->items(),
         'links' => optional($responseData)->links,
-        'meta' => optional($responseData)->meta,
-        ...$extra,
+        'meta' => optional($responseData)->meta
     ], $statusCode);
 }
 
