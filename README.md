@@ -1,66 +1,928 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## REST API INVOICE TEST GUIDELINE
 
-## About Laravel
+## Setup
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Seed database by running `php artisan migrate:fresh --seed`. This will seed the database with default data of which a **User** will be created for **authentication** and **authorization**.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## User Authentication
 
-## Learning Laravel
+##  Login
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Endpoint
+- **URL:** `/login`
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Request
+- **Method:** POST
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### Headers
+- **Accept:** `application/json`
 
-## Laravel Sponsors
+#### Body
+- **Type:** raw (json)
+- **Content-Type:** `application/json`
+- **Body:**
+  ```json
+  {
+    "email": "admin@email.com",
+    "password": "password"
+  }
+  ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Response
+- **Status Code:** `200 OK`
+#### Body
+- **Type:** json
+``` json
+{
+    "success": true,
+    "data": {
+        "token": "1|4HGQlEOQhyrRaRCKxNfII5AStFKE4lFgun6iiz0v8488f6fe",
+        "user": {
+            "id": 1,
+            "name": "Admin User",
+            "email": "admin@email.com"
+        }
+    }
+}
+```
 
-### Premium Partners
+ Logout
+-----------
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Endpoint
 
-## Contributing
+-   URL: `/logout`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Authorization
 
-## Code of Conduct
+-   Type: Bearer Token
+-   Token: (Include the user's token in the Authorization header)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Request
 
-## Security Vulnerabilities
+-   Method: POST
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### Headers
 
-## License
+-   Accept: `application/json`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Response
+- **Status Code:** `204  NO CONTENT`
+
+
+##  Items
+
+Items for which invoices could be generated for.
+
+###  Get List of Items
+
+#### Endpoint
+- **URL:** `/items`
+
+#### Authorization
+- **Type:** Bearer Token
+- **Token:** (Include the user's token in the Authorization header)
+
+#### Request
+- **Method:** GET
+
+##### Headers
+- **Accept:** `application/json`
+
+##### Query Params
+- **name:** George
+- **perPage:** 10
+- **page:** 1
+
+
+### Response
+- **Status Code:** 200 OK
+
+#### Body
+- **Type:** json
+```json
+{
+    "success": true,
+    "data": [
+        {
+            "id": 1,
+            "name": "Milo",
+            "price": "14.00",
+            "quantity": 20,
+            "description": "Cocoa Powder",
+            "createdAt": "2023-11-15 17:21:46",
+            "updatedAt": "2023-11-15 18:17:29"
+        },
+        {
+            "id": 11,
+            "name": "Maggi",
+            "price": "14.00",
+            "quantity": 20,
+            "description": "Cube",
+            "createdAt": "2023-11-15 18:17:41",
+            "updatedAt": "2023-11-15 18:17:41"
+        }
+    ],
+    "links": {
+        "first": "http://localhost:8000/api/v1.0/items?page=1",
+        "last": "http://localhost:8000/api/v1.0/items?page=1",
+        "prev": null,
+        "next": null
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/v1.0/items?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "path": "http://localhost:8000/api/v1.0/items",
+        "per_page": 20,
+        "to": 11,
+        "total": 11
+    }
+}
+```
+
+##  Add Item Quantity
+
+### Endpoint
+- **URL:** `/items/:id/increment-quantity`
+
+### Authorization
+- **Type:** Bearer Token
+- **Token:** (Include the user's token in the Authorization header)
+
+### Path Variables
+- **id:** 1
+
+### Request
+- **Method:** PUT
+
+#### Headers
+- **Accept:** `application/json`
+
+#### Body
+- **Type:** raw (json)
+- **Content-Type:** `application/json`
+- **Body:**
+  ```json
+  {
+      "quantity": 20
+  }
+  ```
+
+### Response
+- **Status Code:** 200 OK
+
+#### Body
+- **Type:** json
+```json
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "name": "Nano tape",
+        "price": 1.58,
+        "quantity": 420,
+        "description": "Solid Tape.",
+        "createdAt": "2023-11-14 19:38:21",
+        "updatedAt": "2023-11-14 20:11:03"
+    }
+}
+```
+##  Update Item
+
+### Endpoint
+- **URL:** `/items/:id/`
+
+### Authorization
+- **Type:** Bearer Token
+- **Token:** (Include the user's token in the Authorization header)
+
+### Request
+- **Method:** PUT
+
+#### Headers
+- **Accept:** `application/json`
+
+#### Body
+- **Type:** raw (json)
+- **Content-Type:** `application/json`
+- **Body:**
+  ```json
+  {
+      "quantity": 20,
+      "price": 14
+  }
+
+### Response
+- **Status Code:** 200 OK
+
+#### Body
+- **Type:** json
+```json
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "name": "Nano tape",
+        "price": 14,
+        "quantity": 20,
+        "description": "Solid Tape.",
+        "createdAt": "2023-11-14 19:38:21",
+        "updatedAt": "2023-11-14 20:11:03"
+    }
+}
+```
+##  Get Item
+
+### Endpoint
+- **URL:** `/items/:id/`
+
+### Authorization
+- **Type:** Bearer Token
+- **Token:** (Include the user's token in the Authorization header)
+
+### Request
+- **Method:** GET
+
+#### Headers
+- **Accept:** `application/json`
+
+### Response
+- **Status Code:** 200 OK
+
+#### Body
+- **Type:** json
+```json
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "name": "Nano tape",
+        "price": 14,
+        "quantity": 20,
+        "description": "Solid Tape.",
+        "createdAt": "2023-11-14 19:38:21",
+        "updatedAt": "2023-11-14 20:11:03"
+    }
+}
+```
+
+##  Create Item
+
+### Endpoint
+- **URL:** `/items`
+
+### Authorization
+- **Type:** Bearer Token
+- **Token:** (Include the user's token in the Authorization header)
+
+### Request
+- **Method:** POST
+
+#### Headers
+- **Accept:** `application/json`
+
+#### Body
+- **Type:** raw (json)
+- **Content-Type:** `application/json`
+- **Body:**
+  ```json
+  {
+      "name": "Maggi",
+      "quantity": 20,
+      "price": 14,
+      "description": "Solid Tape."
+  }
+
+### Response
+- **Status Code:** 200 OK
+
+#### Body
+- **Type:** json
+```json
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "name": "Nano tape",
+        "price": 14,
+        "quantity": 20,
+        "description": "Solid Tape.",
+        "createdAt": "2023-11-14 19:38:21",
+        "updatedAt": "2023-11-14 20:11:03"
+    }
+}
+```
+
+##  Get Customers
+
+### Endpoint
+- **URL:** `/customers`
+
+### Authorization
+- **Type:** Bearer Token
+- **Token:** (Include the user's token in the Authorization header)
+
+### Request
+- **Method:** GET
+
+#### Headers
+- **Accept:** `application/json`
+
+#### Query Params
+- **name:** George
+- **perPage:** 2
+- **page:** 2
+
+### Response
+- **Status Code:** 200 OK
+
+#### Body
+- **Type:** json
+```json
+{
+    "success": true,
+    "data": [
+        {
+            "id": 1,
+            "name": "Trent Fahey",
+            "phone": "+19294922535",
+            "createdAt": "2023-11-15 17:21:46",
+            "updatedAt": "2023-11-15 17:21:46"
+        },
+        {
+            "id": 2,
+            "name": "Valerie Reichert",
+            "phone": "+1-541-608-1705",
+            "createdAt": "2023-11-15 17:21:46",
+            "updatedAt": "2023-11-15 17:21:46"
+        },
+        {
+            "id": 11,
+            "name": "samuel",
+            "phone": "0244449933",
+            "createdAt": "2023-11-15 18:22:41",
+            "updatedAt": "2023-11-15 18:22:41"
+        }
+    ],
+    "links": {
+        "first": "http://localhost:8000/api/v1.0/customers?page=1",
+        "last": "http://localhost:8000/api/v1.0/customers?page=1",
+        "prev": null,
+        "next": null
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/v1.0/customers?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "path": "http://localhost:8000/api/v1.0/customers",
+        "per_page": 20,
+        "to": 11,
+        "total": 11
+    }
+}
+```
+
+## Get Customer
+
+### Endpoint
+- **URL:** `/customers/:id`
+
+### Authorization
+- **Type:** Bearer Token
+- **Token:** (Include the user's token in the Authorization header)
+
+### Request
+- **Method:** GET
+
+#### Headers
+- **Accept:** `application/json`
+
+### Response
+- **Status Code:** 200 OK
+- **Type:** json
+```json
+{
+    "success": true,
+    "data": {
+        "id": 1,
+        "name": "Trent Fahey",
+        "phone": "+19294922535",
+        "createdAt": "2023-11-15 17:21:46",
+        "updatedAt": "2023-11-15 17:21:46"
+    }
+}
+```
+
+##  Create Customer
+
+### Endpoint
+- **URL:** `/customers`
+
+### Authorization
+- **Type:** Bearer Token
+- **Token:** (Include the user's token in the Authorization header)
+
+### Request
+- **Method:** POST
+
+#### Headers
+- **Accept:** `application/json`
+
+
+#### Body
+- **Type:** raw (json)
+- **Content-Type:** `application/json`
+- **Body:**
+  ```json
+  {
+      "name": "samuel",
+      "phone": "0244449933"
+  }
+
+### Response
+
+-   Status Code: 201 CREATED
+
+#### Body
+
+-   Type: json
+```json
+{
+    "success": true,
+    "data": {
+        "id": 11,
+        "name": "samuel",
+        "phone": "0244449933",
+        "createdAt": "2023-11-15 18:22:41",
+        "updatedAt": "2023-11-15 18:22:41"
+    }
+}
+```
+
+
+##  Generate Invoice
+
+### Endpoint
+- **URL:** `/invoices`
+
+### Authorization
+- **Type:** Bearer Token
+- **Token:** (Include the user's token in the Authorization header)
+
+### Request
+- **Method:** POST
+
+#### Headers
+- **Accept:** `application/json`
+
+#### Body
+- **Type:** raw (json)
+- **Content-Type:** `application/json`
+- **Body:**
+  ```json
+  {
+      "customerId": 1,
+      "issueDate": "2023-11-14",
+      "dueDate": "2023-11-14",
+      "items": [
+          {
+              "itemId": 1,
+              "price": "11",
+              "quantity": 10,
+              "description": "Nice to have"
+          },
+          {
+              "itemId": 2,
+              "price": "20.4",
+              "quantity": 10,
+              "description": "quality show"
+          }
+      ]
+  }
+  ```
+
+### Response
+
+-   Status Code: 201 CREATED
+
+#### Body
+
+-   Type: json
+```json
+{
+    "success": true,
+    "data": {
+        "id": 27,
+        "invoiceNumber": "INV00027",
+        "total": "124.00",
+        "customer": {
+            "id": 1,
+            "name": "Prof. Devin Renner",
+            "phone": "630.530.2149",
+            "createdAt": "2023-11-15 07:44:25",
+            "updatedAt": "2023-11-15 07:44:25"
+        },
+        "items": [
+            {
+                "id": 75,
+                "itemName": "Otha Cruickshank",
+                "unitPrice": "11.00",
+                "quantity": 2,
+                "amount": "22.00",
+                "description": "Nice to have"
+            },
+            {
+                "id": 76,
+                "itemName": "Gonzalo Deckow",
+                "unitPrice": "20.40",
+                "quantity": 5,
+                "amount": "102.00",
+                "description": "quality show"
+            }
+        ],
+        "issueDate": "2023-11-14",
+        "dueDate": "2023-11-14",
+        "createdAt": "2023-11-15 10:22:32"
+    }
+}
+```
+
+##  Update Invoice Items
+
+### Endpoint
+- **URL:** `/invoices/:id/items`
+
+### Authorization
+- **Type:** Bearer Token
+- **Token:** (Include the user's token in the Authorization header)
+
+### Request
+- **Method:** PUT
+
+#### Headers
+- **Accept:** `application/json`
+
+#### Body
+- **Type:** raw (json)
+- **Content-Type:** `application/json`
+- **Body:**
+  ```json
+  {
+      "items": [
+          {
+              "itemId": 1,
+              "price": "20",
+              "quantity": 10,
+              "description": "Nice to have"
+          },
+          {
+              "itemId": 2,
+              "price": "20.4",
+              "quantity": 5,
+              "description": "quality show"
+          }
+      ]
+  }
+  ```
+
+### Response
+- **Status Code:** 200 OK
+
+#### Body
+- **Type:** json
+```json
+{
+    "success": true,
+    "data": {
+        "id": 44,
+        "invoiceNumber": "INV00044",
+        "total": "302.00",
+        "customer": {
+            "id": 1,
+            "name": "Prof. Devin Renner",
+            "phone": "630.530.2149",
+            "createdAt": "2023-11-15 07:44:25",
+            "updatedAt": "2023-11-15 07:44:25"
+        },
+        "items": [
+            {
+                "id": 99,
+                "itemName": "Otha Cruickshank",
+                "unitPrice": "20.00",
+                "quantity": 10,
+                "amount": "200.00",
+                "description": "Nice to have"
+            },
+            {
+                "id": 103,
+                "itemName": "Gonzalo Deckow",
+                "unitPrice": "20.40",
+                "quantity": 5,
+                "amount": "102.00",
+                "description": "quality show"
+            }
+        ],
+        "issueDate": "2023-11-14",
+        "dueDate": "2023-11-15",
+        "createdAt": "2023-11-15 14:18:28"
+    }
+}
+```
+
+### Error Response - Update Invoice Items Insufficient Stock
+- **Status Code:** 422 UNPROCESSABLE CONTENT
+
+#### Body
+- **Type:** json
+```json
+{
+    "message": "Insufficient stock for the selected item with ItemId: 2. Available Stock: 4900",
+    "errors": {
+        "items": [
+            "Insufficient stock for the selected item with ItemId: 2. Available Stock: 4900"
+        ]
+    }
+}
+```
+
+##  Update Invoice
+
+### Endpoint
+- **URL:** `/invoices/:id`
+
+### Authorization
+- **Type:** Bearer Token
+- **Token:** (Include the user's token in the Authorization header)
+
+### Request
+- **Method:** PUT
+
+#### Headers
+- **Accept:** `application/json`
+
+#### Body
+- **Type:** raw (json)
+- **Content-Type:** `application/json`
+- **Body:**
+  ```json
+  {
+      "customerId": 1,
+      "issueDate": "2023-11-14",
+      "dueDate": "2023-11-15"
+  }
+  ```
+
+### Response
+- **Status Code:** 200 OK
+- **Type:** json
+```json
+{
+    "success": true,
+    "data": {
+        "id": 11,
+        "invoiceNumber": "INV00011",
+        "total": "130.00",
+        "customer": {
+            "id": 2,
+            "name": "John Doe",
+            "phone": "+1234567890",
+            "createdAt": "2023-11-01 12:34:56",
+            "updatedAt": "2023-11-01 12:34:56"
+        },
+        "items": [
+            {
+                "id": 21,
+                "itemName": "Product A",
+                "unitPrice": "30.00",
+                "quantity": 3,
+                "amount": "90.00",
+                "description": "New description"
+            },
+            {
+                "id": 22,
+                "itemName": "Product B",
+                "unitPrice": "20.00",
+                "quantity": 2,
+                "amount": "40.00",
+                "description": "Updated description"
+            }
+        ],
+        "issueDate": "2023-11-14",
+        "dueDate": "2023-11-30",
+        "createdAt": "2023-11-10 15:45:00",
+        "updatedAt": "2023-11-11 09:30:15"
+    }
+}
+```
+
+## Delete Invoice
+
+### Endpoint
+- **URL:** `/invoices/:id`
+
+### Authorization
+- **Type:** Bearer Token
+- **Token:** (Include the user's token in the Authorization header)
+
+### Request
+- **Method:** DELETE
+
+#### Headers
+- **Accept:** `application/json`
+
+### Response
+- **Status Code:** `204 No Content`
+
+
+## Get Invoice
+
+### Endpoint
+- **URL:** `/invoices/:id`
+
+### Authorization
+- **Type:** Bearer Token
+- **Token:** (Include the user's token in the Authorization header)
+
+### Request
+- **Method:** GET
+
+#### Headers
+- **Accept:** `application/json`
+
+### Response
+- **Status Code:** 200 OK
+- **Type:** json
+```json
+{
+    "success": true,
+    "data": {
+        "id": 11,
+        "invoiceNumber": "INV00011",
+        "total": "130.00",
+        "customer": {
+            "id": 2,
+            "name": "John Doe",
+            "phone": "+1234567890",
+            "createdAt": "2023-11-01 12:34:56",
+            "updatedAt": "2023-11-01 12:34:56"
+        },
+        "items": [
+            {
+                "id": 21,
+                "itemName": "Product A",
+                "unitPrice": "30.00",
+                "quantity": 3,
+                "amount": "90.00",
+                "description": "New description"    
+            },
+            {
+                "id": 22,
+                "itemName": "Product B",
+                "unitPrice": "20.00",
+                "quantity": 2,
+                "amount": "40.00",
+                "description": "Updated description"
+            }
+        ],
+        "issueDate": "2023-11-14",
+        "dueDate": "2023-11-30",
+        "createdAt": "2023-11-10 15:45:00",
+        "updatedAt": "2023-11-11 09:30:15"  
+    }
+}
+```
+
+##  Get Invoices
+
+### Endpoint
+- **URL:** `/invoices`
+
+### Authorization
+- **Type:** Bearer Token
+- **Token:** (Include the user's token in the Authorization header)
+
+### Request
+- **Method:** GET
+
+#### Headers
+- **Accept:** `application/json`
+
+### Query Params
+- **customerId:** 1
+
+### Response
+- **Status Code:** 200 OK
+- **Type:** json
+```json
+{
+    "success": true,
+    "data": [
+        {
+            "id": 1,
+            "invoiceNumber": "INV00001",
+            "total": "3.00",
+            "customer": {
+                "id": 5,
+                "name": "Mr. Seamus Tromp",
+                "phone": "+13398755812",
+                "createdAt": "2023-11-15 17:21:46",
+                "updatedAt": "2023-11-15 17:21:46"
+            },
+            "issueDate": "2021-04-17",
+            "dueDate": "1998-08-09",
+            "createdAt": "2023-11-15 17:21:46"
+        },
+        {
+            "id": 2,
+            "invoiceNumber": "INV00002",
+            "total": "2.00",
+            "customer": {
+                "id": 4,
+                "name": "Lindsey Wiza",
+                "phone": "940-998-0817",
+                "createdAt": "2023-11-15 17:21:46",
+                "updatedAt": "2023-11-15 17:21:46"
+            },
+            "issueDate": "2023-09-16",
+            "dueDate": "2015-09-19",
+            "createdAt": "2023-11-15 17:21:46"
+        }
+    ],
+    "links": {
+        "first": "http://localhost:8000/api/v1.0/invoices?page=1",
+        "last": "http://localhost:8000/api/v1.0/invoices?page=1",
+        "prev": null,
+        "next": null
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/v1.0/invoices?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "path": "http://localhost:8000/api/v1.0/invoices",
+        "per_page": 20,
+        "to": 11,
+        "total": 11
+    }
+}
+```
+
+
+
+
+
+
+

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Action\Invoice\CreateInvoiceAction;
+use App\Action\Invoice\DeleteInvoiceAction;
 use App\Action\Invoice\GetAllInvoicesAction;
 use App\Action\Invoice\ShowInvoiceAction;
 use App\Action\Invoice\UpdateInvoiceAction;
@@ -69,6 +70,15 @@ class InvoiceController extends Controller
 
         if ($invoice){
             return successResponse($invoice);
+        }
+        return errorResponse();
+    }
+
+    public function destroy(Invoice $invoice, DeleteInvoiceAction $action){
+        $invoiceIsDeleted = $action->handle($invoice);
+
+        if ($invoiceIsDeleted){
+            return successResponse([], 204);
         }
         return errorResponse();
     }
