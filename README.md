@@ -41,7 +41,7 @@ This will seed the database with default data of which a **User** will be create
 ##  Login
 
 ### Endpoint
-- **URL:** `/login`
+- **URL:** `/v1.0/login`
 
 ### Request
 - **Method:** POST
@@ -109,7 +109,7 @@ Items for which invoices could be generated for.
 ###  Get List of Items
 
 #### Endpoint
-- **URL:** `/items`
+- **URL:** `/v1.0/items`
 
 #### Authorization
 - **Type:** Bearer Token
@@ -193,7 +193,7 @@ Items for which invoices could be generated for.
 ##  Add Item Quantity
 
 ### Endpoint
-- **URL:** `/items/:itemId/increment-quantity`
+- **URL:** `/v1.0/items/:itemId/increment-quantity`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -238,7 +238,7 @@ Items for which invoices could be generated for.
 ##  Update Item
 
 ### Endpoint
-- **URL:** `/items/:itemId/`
+- **URL:** `/v1.0/items/:itemId/`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -282,7 +282,7 @@ Items for which invoices could be generated for.
 ##  Get Item
 
 ### Endpoint
-- **URL:** `/items/:itemId/`
+- **URL:** `/v1.0/items/:itemId/`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -317,7 +317,7 @@ Items for which invoices could be generated for.
 ##  Create Item
 
 ### Endpoint
-- **URL:** `/items`
+- **URL:** `/v1.0/items`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -364,7 +364,7 @@ Items for which invoices could be generated for.
 ##  Get Customers
 
 ### Endpoint
-- **URL:** `/customers`
+- **URL:** `/v1.0/customers`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -450,7 +450,7 @@ Items for which invoices could be generated for.
 ## Get Customer
 
 ### Endpoint
-- **URL:** `/customers/:customerId`
+- **URL:** `/v1.0/customers/:customerId`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -481,7 +481,7 @@ Items for which invoices could be generated for.
 ##  Create Customer
 
 ### Endpoint
-- **URL:** `/customers`
+- **URL:** `/v1.0/customers`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -528,7 +528,7 @@ Items for which invoices could be generated for.
 ##  Generate Invoice
 
 ### Endpoint
-- **URL:** `/invoices`
+- **URL:** `/v1.0/invoices`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -615,7 +615,7 @@ Items for which invoices could be generated for.
 ##  Update Invoice Items
 
 ### Endpoint
-- **URL:** `/invoices/:invoiceId/items`
+- **URL:** `/v1.0/invoices/:invoiceId/items`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -713,7 +713,7 @@ Items for which invoices could be generated for.
 ##  Update Invoice
 
 ### Endpoint
-- **URL:** `/invoices/:invoiceId`
+- **URL:** `/v1.0/invoices/:invoiceId`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -783,7 +783,7 @@ Items for which invoices could be generated for.
 ## Delete Invoice
 
 ### Endpoint
-- **URL:** `/invoices/:invoiceId`
+- **URL:** `/v1.0/invoices/:invoiceId`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -802,7 +802,7 @@ Items for which invoices could be generated for.
 ## Get Invoice
 
 ### Endpoint
-- **URL:** `/invoices/:invoiceId`
+- **URL:** `/v1.0/invoices/:invoiceId`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -860,7 +860,7 @@ Items for which invoices could be generated for.
 ##  Get Invoices
 
 ### Endpoint
-- **URL:** `/invoices`
+- **URL:** `/v1.0/invoices`
 
 ### Authorization
 - **Type:** Bearer Token
