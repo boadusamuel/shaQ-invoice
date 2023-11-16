@@ -2,9 +2,39 @@
 ## REST API INVOICE TEST GUIDELINE
 
 ## Setup
+1. **Clone Repository:**
+   ```bash
+   git clone https://github.com/boadusamuel/shaQ-invoice.git
+   ```
+   
+2. **Install composer dependencies:**
+   ```bash
+   cd shaQ-invoice
+   composer install
+   ```
+   
+3. **Copy Env file:**
+   ```bash
+   cp .env.example .env
+   ```
+   
+4. **Generate Application Key:**
+   ```bash
+   php artisan key:generate
+   ```
+   Make sure to update the .env file with your database configuration settings before running the application.
 
-Seed database by running `php artisan migrate:fresh --seed`. This will seed the database with default data of which a **User** will be created for **authentication** and **authorization**.
 
+5. **Migrate and Seed Database:**
+   ```bash
+   php artisan migrate:fresh --seed
+   ```
+This will seed the database with default data of which a **User** will be created for **authentication** and **authorization**.
+
+6. **Run Application:**
+   ```bash
+   php artisan serve
+   ```
 
 ## User Authentication
 
