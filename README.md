@@ -193,14 +193,12 @@ Items for which invoices could be generated for.
 ##  Add Item Quantity
 
 ### Endpoint
-- **URL:** `/items/:id/increment-quantity`
+- **URL:** `/items/:itemId/increment-quantity`
 
 ### Authorization
 - **Type:** Bearer Token
 - **Token:** (Include the user's token in the Authorization header)
 
-### Path Variables
-- **id:** 1
 
 ### Request
 - **Method:** PUT
@@ -240,7 +238,7 @@ Items for which invoices could be generated for.
 ##  Update Item
 
 ### Endpoint
-- **URL:** `/items/:id/`
+- **URL:** `/items/:itemId/`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -284,7 +282,7 @@ Items for which invoices could be generated for.
 ##  Get Item
 
 ### Endpoint
-- **URL:** `/items/:id/`
+- **URL:** `/items/:itemId/`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -452,7 +450,7 @@ Items for which invoices could be generated for.
 ## Get Customer
 
 ### Endpoint
-- **URL:** `/customers/:id`
+- **URL:** `/customers/:customerId`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -617,7 +615,7 @@ Items for which invoices could be generated for.
 ##  Update Invoice Items
 
 ### Endpoint
-- **URL:** `/invoices/:id/items`
+- **URL:** `/invoices/:invoiceId/items`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -715,7 +713,7 @@ Items for which invoices could be generated for.
 ##  Update Invoice
 
 ### Endpoint
-- **URL:** `/invoices/:id`
+- **URL:** `/invoices/:invoiceId`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -785,7 +783,7 @@ Items for which invoices could be generated for.
 ## Delete Invoice
 
 ### Endpoint
-- **URL:** `/invoices/:id`
+- **URL:** `/invoices/:invoiceId`
 
 ### Authorization
 - **Type:** Bearer Token
@@ -804,7 +802,7 @@ Items for which invoices could be generated for.
 ## Get Invoice
 
 ### Endpoint
-- **URL:** `/invoices/:id`
+- **URL:** `/invoices/:invoiceId`
 
 ### Authorization
 - **Type:** Bearer Token
